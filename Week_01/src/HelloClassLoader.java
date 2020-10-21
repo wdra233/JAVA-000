@@ -11,11 +11,11 @@ import java.util.List;
 public class HelloClassLoader extends ClassLoader{
     public static String XCLASS_PATH = "Hello.xlass";
     public static void main(String[] args) {
-        Class<?> clzz = new HelloClassLoader().findClass("Hello");
+        Class<?> clazz = new HelloClassLoader().findClass("Hello");
         try {
-            Method hello = clzz.getDeclaredMethod("hello");
-            hello.setAccessible(true);
-            hello.invoke(clzz.newInstance());
+            // using reflection to invoke hello method
+            Method hello = clazz.getDeclaredMethod("hello");
+            hello.invoke(clazz.getDeclaredConstructor().newInstance());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -30,11 +30,11 @@ public class HelloClassLoader extends ClassLoader{
 
     @Override
     protected Class<?> findClass(String className) {
-        byte[] bytes = convertFileToBytes();
+        byte[] bytes = decodeToBytes();
         return defineClass(className, bytes, 0, bytes.length);
     }
 
-    private byte[] convertFileToBytes() {
+    private byte[] decodeToBytes() {
         List<Byte> bytes = new ArrayList<>();
         try(FileInputStream fis = new FileInputStream(new File(XCLASS_PATH))) {
             int singleByte;
