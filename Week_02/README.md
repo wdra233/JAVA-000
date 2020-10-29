@@ -16,9 +16,9 @@ sb -u http://localhost:8088/api/hello -c 20 -N 60
 
 测得的RPS峰值是3517
 
-![image of superbenchmarker](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\sb-peak-localhost.PNG)
+![image of superbenchmarker](screenshots\sb-peak-localhost.PNG)
 
-![image of sb analysis](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\sb-peak-analysis.PNG)
+![image of sb analysis](screenshots\sb-peak-analysis.PNG)
 
 ## GC analysis
 
