@@ -16,9 +16,9 @@ sb -u http://localhost:8088/api/hello -c 20 -N 60
 
 测得的RPS峰值是3517
 
-![image of superbenchmarker](screenshots\sb-peak-localhost.PNG)
+![image of superbenchmarker](screenshots/sb-peak-localhost.PNG)
 
-![image of sb analysis](screenshots\sb-peak-analysis.PNG)
+![image of sb analysis](screenshots/sb-peak-analysis.PNG)
 
 ## GC analysis
 
@@ -35,11 +35,11 @@ java GCLogAnalysis
 
 use  default GC for jdk 11
 
-![image of default](screenshots\GC-simple.PNG)
+![image of default](screenshots/GC-simple.PNG)
 
 Save GC logs to files
 
-![image of GC logs](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-java11-cmd.PNG)
+![image of GC logs](screenshots/GC-java11-cmd.PNG)
 
 通过查看gc.simple.log日志即可获得日志相关信息
 
@@ -47,9 +47,9 @@ Save GC logs to files
 
 通过设置 -Xmx128m 来触发OOM
 
-![image of OOM](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-OOM-01.PNG)
+![image of OOM](screenshots/GC-OOM-01.PNG)
 
-![image of OOM part2](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-OOM-02.PNG)
+![image of OOM part2](screenshots/GC-OOM-02.PNG)
 
 可以看出设置堆内存过小会导致full gc次数增加, 但是垃圾清理效果并没有增加，最终导致OOM
 
@@ -59,29 +59,29 @@ Save GC logs to files
 java -Xms512m -Xmx512m -XX:+PrintGCDetails GCLogAnalysis
 ```
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-512m-01.PNG)
+![](screenshots/GC-512m-01.PNG)
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-512m-02.PNG)
+![](screenshots/GC-512m-02.PNG)
 
 ```java
 java -Xms1g -Xmx1g -XX:+PrintGCDetails GCLogAnalysis
 ```
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-1g-01.PNG)
+![](screenshots/GC-1g-01.PNG)
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-1g-02.PNG)
+![](screenshots/GC-1g-02.PNG)
 
 ```java
 java -Xms2g -Xmx2g -XX:+PrintGCDetails GCLogAnalysis
 ```
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-2g-01.PNG)
+![](screenshots/GC-2g-01.PNG)
 
 ```java
 java -Xms4g -Xmx4g -XX:+PrintGCDetails GCLogAnalysis
 ```
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-4g-01.PNG)
+![](screenshots/GC-4g-01.PNG)
 
 ### 小结
 
@@ -96,31 +96,31 @@ java -Xms4g -Xmx4g -XX:+PrintGCDetails GCLogAnalysis
 java -XX:+UserSerialGC -Xms512m -Xmx512m -XX:+PrintGC GCLogAnalysis
 ```
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-Serial-512m.PNG)
+![](screenshots/GC-Serial-512m.PNG)
 
 ```java
 java -XX:+UserParallelGC -Xms512m -Xmx512m -XX:+PrintGC GCLogAnalysis
 ```
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-Parallel-512m.PNG)
+![](screenshots/GC-Parallel-512m.PNG)
 
 ```java
 java -XX:+UserConcMarkSweepGC -Xms512m -Xmx512m -XX:+PrintGC GCLogAnalysis
 ```
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-CMS-512m-01.PNG)
+![](screenshots/GC-CMS-512m-01.PNG)
 
-![GC-CMS-512m-02](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-CMS-512m-02.PNG)
+![GC-CMS-512m-02](screenshots/GC-CMS-512m-02.PNG)
 
 ```java
 java -XX:+UserG1GC -Xms512m -Xmx512m -XX:+PrintGC GCLogAnalysis
 ```
 
-!(E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-G1-51m-02.PNG)
+!(E:/ADVANCED JAVA TRAINING/JAVA-000/Week_02/screenshots/GC-G1-51m-02.PNG)
 
-![GC-G1-512m-01](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-G1-512m-01.PNG)
+![GC-G1-512m-01](screenshots/GC-G1-512m-01.PNG)
 
-![](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-G1-51m-02.PNG)
+![](screenshots/GC-G1-51m-02.PNG)
 
 ### 小结
 
