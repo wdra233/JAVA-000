@@ -35,7 +35,7 @@ java GCLogAnalysis
 
 use  default GC for jdk 11
 
-![image of default](E:\ADVANCED JAVA TRAINING\JAVA-000\Week_02\screenshots\GC-simple.PNG)
+![image of default](screenshots\GC-simple.PNG)
 
 Save GC logs to files
 
