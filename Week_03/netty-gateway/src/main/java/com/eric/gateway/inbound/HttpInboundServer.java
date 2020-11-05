@@ -1,5 +1,6 @@
 package com.eric.gateway.inbound;
 
+import com.eric.gateway.commons.AppConstants;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
@@ -12,6 +13,9 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.eric.gateway.commons.AppConstants.BOSS_GROUP_NUM;
+import static com.eric.gateway.commons.AppConstants.WORKER_GROUP_NUM;
 
 
 public class HttpInboundServer {
@@ -28,8 +32,8 @@ public class HttpInboundServer {
 
     public void run() throws Exception {
 
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup(16);
+        EventLoopGroup bossGroup = new NioEventLoopGroup(BOSS_GROUP_NUM);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(WORKER_GROUP_NUM);
 
         try {
             ServerBootstrap b = new ServerBootstrap();

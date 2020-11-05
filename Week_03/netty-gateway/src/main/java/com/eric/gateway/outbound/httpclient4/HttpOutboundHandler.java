@@ -95,24 +95,10 @@ public class HttpOutboundHandler implements OutboundHandler {
     private void handleResponse(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx, final HttpResponse endpointResponse) throws Exception {
         FullHttpResponse response = null;
         try {
-//            String value = "hello,kimmking";
-//            response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(value.getBytes("UTF-8")));
-//            response.headers().set("Content-Type", "application/json");
-//            response.headers().setInt("Content-Length", response.content().readableBytes());
-
-
             byte[] body = EntityUtils.toByteArray(endpointResponse.getEntity());
-//            System.out.println(new String(body));
-//            System.out.println(body.length);
-
             response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(body));
             response.headers().set("Content-Type", "application/json");
             response.headers().setInt("Content-Length", Integer.parseInt(endpointResponse.getFirstHeader("Content-Length").getValue()));
-
-//            for (Header e : endpointResponse.getAllHeaders()) {
-//                //response.headers().set(e.getName(),e.getValue());
-//                System.out.println(e.getName() + " => " + e.getValue());
-//            } 
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,7 +114,6 @@ public class HttpOutboundHandler implements OutboundHandler {
                 }
             }
             ctx.flush();
-            //ctx.close();
         }
 
     }
