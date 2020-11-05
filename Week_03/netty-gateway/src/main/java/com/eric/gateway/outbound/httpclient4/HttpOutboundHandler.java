@@ -2,6 +2,7 @@ package com.eric.gateway.outbound.httpclient4;
 
 
 import com.eric.gateway.commons.NamedThreadFactory;
+import com.eric.gateway.commons.utils.FullHttpMessageUtils;
 import com.eric.gateway.commons.utils.SystemUtils;
 import com.eric.gateway.outbound.OutboundHandler;
 import io.netty.buffer.Unpooled;
@@ -17,9 +18,9 @@ import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import java.util.Map;
 import java.util.concurrent.*;
 
 import static com.eric.gateway.commons.AppConstants.BLOCKING_QUEUE_SIZE;
@@ -63,11 +64,16 @@ public class HttpOutboundHandler implements OutboundHandler {
         proxyService.submit(() -> fetchGet(fullRequest, ctx, url));
     }
 
+    @Override
+    public String generateResponse() {
+        return "Hello World from: " + backendUrl;
+    }
+
+
     private void fetchGet(final FullHttpRequest inbound, final ChannelHandlerContext ctx, final String url) {
         final HttpGet httpGet = new HttpGet(url);
-        //httpGet.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
-        httpGet.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_KEEP_ALIVE);
-        httpclient.execute(httpGet, new FutureCallback<HttpResponse>() {
+        copyHeaders(inbound, httpGet);
+        httpclient.execute(httpGet, new FutureCallback<>() {
             @Override
             public void completed(final HttpResponse endpointResponse) {
                 try {
@@ -92,14 +98,12 @@ public class HttpOutboundHandler implements OutboundHandler {
         });
     }
 
-    private void handleResponse(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx, final HttpResponse endpointResponse) throws Exception {
+    private void handleResponse(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx, final HttpResponse endpointResponse) {
         FullHttpResponse response = null;
         try {
             byte[] body = EntityUtils.toByteArray(endpointResponse.getEntity());
             response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(body));
-            response.headers().set("Content-Type", "application/json");
-            response.headers().setInt("Content-Length", Integer.parseInt(endpointResponse.getFirstHeader("Content-Length").getValue()));
-
+            response = (FullHttpResponse) FullHttpMessageUtils.replaceBody(generateResponse(), response);
         } catch (Exception e) {
             e.printStackTrace();
             response = new DefaultFullHttpResponse(HTTP_1_1, NO_CONTENT);
@@ -121,6 +125,13 @@ public class HttpOutboundHandler implements OutboundHandler {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         cause.printStackTrace();
         ctx.close();
+    }
+
+    private void copyHeaders(final FullHttpRequest fullHttpRequest, final HttpGet httpGet) {
+        Map<String, String> headers = FullHttpMessageUtils.extractHeadersFrom(fullHttpRequest);
+        for(Map.Entry<String, String> entry : headers.entrySet()) {
+            httpGet.addHeader(entry.getKey(), entry.getValue());
+        }
     }
 
 
