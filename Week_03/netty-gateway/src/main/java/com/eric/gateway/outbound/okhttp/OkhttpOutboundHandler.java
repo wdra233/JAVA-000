@@ -2,6 +2,7 @@ package com.eric.gateway.outbound.okhttp;
 
 import com.eric.gateway.commons.utils.FullHttpMessageUtils;
 import com.eric.gateway.outbound.OutboundHandler;
+import com.eric.gateway.router.RandomRouter;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
@@ -12,6 +13,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.NO_CONTENT;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
@@ -24,7 +27,7 @@ public class OkhttpOutboundHandler implements OutboundHandler {
     private String backendUrl;
 
     public OkhttpOutboundHandler(String backendUrl) {
-        this.backendUrl = backendUrl.endsWith("/") ? backendUrl.substring(0, backendUrl.length() - 1) : backendUrl;
+        this.backendUrl = backendUrl;
     }
 
     @Override

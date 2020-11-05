@@ -6,6 +6,8 @@ import com.eric.gateway.filter.impl.MessageFilterChain;
 import com.eric.gateway.outbound.OutboundHandler;
 import com.eric.gateway.outbound.httpclient4.HttpOutboundHandler;
 import com.eric.gateway.outbound.okhttp.OkhttpOutboundHandler;
+import com.eric.gateway.router.HttpEndpointRouter;
+import com.eric.gateway.router.RandomRouter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -13,15 +15,18 @@ import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
-
-    private static Logger logger = LoggerFactory.getLogger(HttpInboundHandler.class);
-    private final String proxyServer;
     private OutboundHandler handler;
-
-    public HttpInboundHandler(String proxyServer) {
-        this.proxyServer = proxyServer;
-        handler = new OkhttpOutboundHandler(this.proxyServer);
+    private static HttpEndpointRouter router = new RandomRouter();
+    public static List<String> endpoints = Arrays.asList(
+            "http://localhost:8088",
+            "http://localhost:8081",
+            "http://localhost:8082");
+    public HttpInboundHandler() {
+        handler = new OkhttpOutboundHandler(router.route(endpoints));
     }
 
     @Override

@@ -3,11 +3,13 @@ package com.eric.gateway;
 
 import com.eric.gateway.inbound.HttpInboundServer;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class NettyServerApplication {
     
     public final static String GATEWAY_NAME = "NIOGateway";
     public final static String GATEWAY_VERSION = "1.0.0";
-    
     public static void main(String[] args) {
         String proxyServer = System.getProperty("proxyServer","http://localhost:8088");
         String proxyPort = System.getProperty("proxyPort","8888");
@@ -17,7 +19,7 @@ public class NettyServerApplication {
     
         int port = Integer.parseInt(proxyPort);
         System.out.println(GATEWAY_NAME + " " + GATEWAY_VERSION +" starting...");
-        HttpInboundServer server = new HttpInboundServer(port, proxyServer);
+        HttpInboundServer server = new HttpInboundServer(port);
         System.out.println(GATEWAY_NAME + " " + GATEWAY_VERSION +" started at http://localhost:" + port + " for server:" + proxyServer);
         try {
             server.run();
