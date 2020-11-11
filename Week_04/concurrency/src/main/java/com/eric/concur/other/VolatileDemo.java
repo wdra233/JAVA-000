@@ -2,9 +2,9 @@ package com.eric.concur.other;
 
 import com.eric.concur.util.FiboUtil;
 
-public class SynchronizeDemo {
-    private static int result = 0;
-    private static final Object lock = new Object();
+public class VolatileDemo {
+    private static volatile int result = 0;
+    private static volatile boolean finished = false;
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -14,18 +14,22 @@ public class SynchronizeDemo {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                synchronized (lock) {
-                    result = FiboUtil.sum(36);
-                    lock.notify();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                result = FiboUtil.sum(36);
+                finished = true;
             }
         }).start();
-        // 确保子线程先获得锁
-        Thread.sleep(1000);
-        synchronized (lock) {
-            // 确保拿到result 并输出
-            System.out.println("异步计算结果为："+ result);
+
+        while(!finished) {
+            System.out.println("waiting for result...");
         }
+        // 确保拿到result 并输出
+        System.out.println("异步计算结果为："+ result);
+
 
         System.out.println("使用时间："+ (System.currentTimeMillis()-start) + " ms");
 

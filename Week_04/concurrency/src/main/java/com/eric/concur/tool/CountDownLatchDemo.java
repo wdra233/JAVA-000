@@ -1,10 +1,13 @@
-package com.eric.concur.other;
+package com.eric.concur.tool;
 
 import com.eric.concur.util.FiboUtil;
 
-public class SynchronizeDemo {
+import java.util.concurrent.CountDownLatch;
+
+public class CountDownLatchDemo {
+
+    private static final CountDownLatch countDown = new CountDownLatch(1);
     private static int result = 0;
-    private static final Object lock = new Object();
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -14,18 +17,15 @@ public class SynchronizeDemo {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                synchronized (lock) {
-                    result = FiboUtil.sum(36);
-                    lock.notify();
-                }
+                result = FiboUtil.sum(36);
+                countDown.countDown();
             }
         }).start();
-        // 确保子线程先获得锁
-        Thread.sleep(1000);
-        synchronized (lock) {
-            // 确保拿到result 并输出
-            System.out.println("异步计算结果为："+ result);
-        }
+
+
+        countDown.await();
+        // 确保  拿到result 并输出
+        System.out.println("异步计算结果为："+ result);
 
         System.out.println("使用时间："+ (System.currentTimeMillis()-start) + " ms");
 
