@@ -20,8 +20,9 @@ public class PrepareStatementTest {
 //            boolean result = dao.updateEmailById("batman@gmail.com", -1);
             // Test transaction
             boolean result = dao.updateTransaction("superman@gmail.com", 13, 12);
-
             System.out.println(result ? "success!" : "fail");
+
+            dao.batchInsertEmployee();
         } catch (Exception e) {
             e.printStackTrace();
         }

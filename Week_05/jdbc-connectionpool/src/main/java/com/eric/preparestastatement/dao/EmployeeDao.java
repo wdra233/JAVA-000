@@ -10,4 +10,8 @@ public interface EmployeeDao {
     boolean deleteEmployeeById(int id);
 
     boolean addEmployee(Employee employee);
+
+    boolean updateTransaction(String email, int id1, int id2);
+
+    void batchInsertEmployee();
 }

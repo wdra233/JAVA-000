@@ -90,6 +90,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return resultCnts > 0 ? true : false;
     }
 
+    @Override
     // transaction
     public boolean updateTransaction(String email, int id1, int id2) {
         Connection conn = null;
@@ -113,12 +114,46 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 ex.printStackTrace();
             }
         } finally {
-            // set autoCommit as true
-            JDBCUtils.resetAutoCommit(conn);
             JDBCUtils.closeResource(conn, preparedStatement);
         }
         return resultCnts > 0 ? true : false;
 
+    }
+
+    @Override
+    public void batchInsertEmployee() {
+        // batch insert employee to db 20000 times
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO employee (last_name, gender, email) VALUES(?, ?, ?)";
+        try {
+            conn = JDBCUtils.getConnection();
+            conn.setAutoCommit(false);
+            preparedStatement = conn.prepareStatement(sql);
+            for(int i = 1; i <= 20000; i++) {
+                preparedStatement.setObject(1, "eric_"+i);
+                preparedStatement.setObject(2, "m");
+                preparedStatement.setObject(3, "eric_"+i+"@gmail.com");
+                preparedStatement.addBatch();
+                if(i % 500 == 0) {
+                    // execute batch
+                    preparedStatement.executeBatch();
+                    // clear batch
+                    preparedStatement.clearBatch();
+                }
+            }
+            conn.commit();
+
+        } catch (Exception e) {
+            try {
+                e.printStackTrace();
+                conn.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            JDBCUtils.closeResource(conn, preparedStatement);
+        }
     }
 
     private int update(PreparedStatement preparedStatement, Object... args) throws SQLException {
