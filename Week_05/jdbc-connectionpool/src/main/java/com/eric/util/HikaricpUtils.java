@@ -1,23 +1,19 @@
 package com.eric.util;
 
-import java.io.InputStream;
-import java.sql.*;
-import java.util.Properties;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-public class JDBCUtils {
-    public static Connection getConnection() throws Exception {
-        InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream("jdbc.properties");
-        Properties properties = new Properties();
-        properties.load(is);
-        String user = properties.getProperty("user");
-        String password = properties.getProperty("password");
-        String url = properties.getProperty("url");
-        String driverClass = properties.getProperty("driverClass");
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-        // load driver
-        Class.forName(driverClass);
+public class HikaricpUtils {
+    private static final String CONFIG_FILE = "/hikaricp.properties";
+    private static HikariDataSource hikariDataSource = new HikariDataSource(new HikariConfig(CONFIG_FILE));
 
-        Connection conn = DriverManager.getConnection(url, user, password);
+    public static Connection getHikariCPConnection() throws SQLException {
+        Connection conn = hikariDataSource.getConnection();
         return conn;
     }
 
@@ -50,6 +46,16 @@ public class JDBCUtils {
             if (resultSet != null) resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void resetAutoCommit(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

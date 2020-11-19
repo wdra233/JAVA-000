@@ -10,6 +10,7 @@
     <properties>
         <mysql-driver-version>8.0.19</mysql-driver-version>
         <lombok-version>1.18.16</lombok-version>
+        <hikariCP-version>2.5.1</hikariCP-version>
     </properties>
     <dependencies>
         <dependency>
@@ -22,6 +23,16 @@
             <artifactId>lombok</artifactId>
             <version>${lombok-version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${hikariCP-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.22</version>
         </dependency>
     </dependencies>
 
