@@ -21,9 +21,9 @@ public class SchoolAutoConfiguration {
     public School getSchool() {
         List<Student> students = schoolConfiguration.getStudents();
         List<Klass> klasses = schoolConfiguration.getKlasses();
-        for(Klass klass : klasses) {
-            for(Student student : students) {
-                if(klass.getId() == student.getKlassId()) klass.addStudent(student);
+        for (Klass klass : klasses) {
+            for (Student student : students) {
+                if (klass.getId() == student.getKlassId()) klass.addStudent(student);
             }
         }
         return new School(klasses);

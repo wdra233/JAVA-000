@@ -1,23 +1,18 @@
 school:
   students:
-    -
-      id: 1
+    - id: 1
       klassId: 1
       name: Eric
-    -
-      id: 2
+    - id: 2
       klassId: 1
       name: Jack
-    -
-      id: 3
+    - id: 3
       klassId: 2
       name: Alice
 
   klasses:
-    -
-      id: 1
+    - id: 1
       name: klass01
-    -
-      id: 2
+    - id: 2
       name: klass02
 

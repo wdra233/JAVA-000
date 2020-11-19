@@ -5,5 +5,5 @@ import org.eric.bean.bean.Student;
 import java.util.List;
 
 public interface StudentDao {
-	List<Student> listStudents();
+    List<Student> listStudents();
 }

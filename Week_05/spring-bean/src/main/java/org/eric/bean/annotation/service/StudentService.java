@@ -11,10 +11,10 @@ import java.util.List;
 @Component
 public class StudentService {
 
-	@Autowired
-	private StudentDaoImpl studentDao;
+    @Autowired
+    private StudentDaoImpl studentDao;
 
-	public List<Student> queryAllStudents() {
-		return studentDao.listStudents();
-	}
+    public List<Student> queryAllStudents() {
+        return studentDao.listStudents();
+    }
 }

@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Scope;
 @Configuration
 public class StudentBeanFactory {
 
-	@Bean(name = "java-code-student")
-	@Scope(value = "prototype")
-	public Student student(int id, String name, String address) {
-		return new Student(id, name, address);
-	}
+    @Bean(name = "java-code-student")
+    @Scope(value = "prototype")
+    public Student student(int id, String name, String address) {
+        return new Student(id, name, address);
+    }
 }
