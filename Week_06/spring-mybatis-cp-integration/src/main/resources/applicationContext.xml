@@ -17,18 +17,19 @@
 
 <!--    config dataSource-->
     <context:property-placeholder location="classpath:db.properties" />
-    <bean id="pooledDataSource" class="com.zaxxer.hikari.HikariDataSource">
+    <bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="jdbcUrl" value="${jdbc.jdbcUrl}" />
-        <property name="driverClassName" value="${jdbc.driverClass}" />
-        <property name="username" value="${jdbc.user}" />
+        <property name="driverClass" value="${jdbc.driverClass}" />
+        <property name="user" value="${jdbc.user}" />
         <property name="password" value="${jdbc.password}" />
-<!--        <property name="minPoolSize" value="${jdbc.minPoolSize}" />-->
-<!--        <property name="initialPoolSize" value="${jdbc.initialPoolSize}" />-->
-        <property name="maximumPoolSize" value="${jdbc.maxPoolSize}" />
-<!--        <property name="acquireIncrement" value="${jdbc.acquireIncrement}" />-->
-<!--        <property name="maxStatements" value="${jdbc.maxStatements}" />-->
-<!--        <property name="maxIdleTime" value="${jdbc.maxIdleTime}" />-->
-<!--        <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />-->
+        <property name="minPoolSize" value="${jdbc.minPoolSize}" />
+        <property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+<!--        <property name="minimumIdle" value="2" />-->
+        <property name="acquireIncrement" value="${jdbc.acquireIncrement}" />
+        <property name="maxStatements" value="${jdbc.maxStatements}" />
+        <property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
+        <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />
     </bean>
 
 <!--    config mybatis-->
