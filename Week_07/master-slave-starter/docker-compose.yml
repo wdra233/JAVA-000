@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  mysql-master:
+    build:
+      context: .
+      dockerfile: master/Dockerfile
+    ports:
+      - "3307:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+      - /mydata/mysql/master/log:/var/log/mysql
+      - /mydata/mysql/master/data:/var/lib/mysql
+    restart: always
+    hostname: mysql-master
+    networks:
+      - docker_bridge
+
+  mysql-slave1:
+    build:
+      context: .
+      dockerfile: slave1/Dockerfile
+    ports:
+      - "3308:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+      - /mydata/mysql/slave1/log:/var/log/mysql
+      - /mydata/mysql/slave1/data:/var/lib/mysql
+    restart: always
+    hostname: mysql-slave1
+    networks:
+      - docker_bridge
+
+  mysql-slave2:
+    build:
+      context: .
+      dockerfile: slave2/Dockerfile
+    ports:
+      - "3309:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+      - /mydata/mysql/slave2/log:/var/log/mysql
+      - /mydata/mysql/slave2/data:/var/lib/mysql
+    restart: always
+    hostname: mysql-slave2
+    networks:
+      - docker_bridge
+
+networks:
+  docker_bridge:
+    driver: bridge
+
