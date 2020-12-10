@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  db-sharding-0:
+    image: mysql:5.7
+    ports:
+      - "3326:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+      - /mydata/mysql/db-sharding-0/log:/var/log/mysql
+      - /mydata/mysql/db-sharding-0/data:/var/lib/mysql
+      - /mydata/mysql/db-sharding-0/conf:/etc/mysql
+    restart:
+      always
+    networks:
+      - docker_bridge
+
+
+  db-sharding-1:
+    image: mysql:5.7
+    ports:
+      - "3327:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+      - /mydata/mysql/db-sharding-1/log:/var/log/mysql
+      - /mydata/mysql/db-sharding-1/data:/var/lib/mysql
+      - /mydata/mysql/db-sharding-1/conf:/etc/mysql
+    restart:
+      always
+    networks:
+      - docker_bridge
+
+networks:
+  docker_bridge:
+    driver: bridge
