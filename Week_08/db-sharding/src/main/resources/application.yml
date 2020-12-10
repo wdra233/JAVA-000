@@ -8,13 +8,13 @@ spring:
       names: ds0,ds1
       ds0:
         type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://192.168.56.10:3326/e_commerce?useSSL=false&useUnicode=true&characterEncoding=UTF-8
         username: root
         password: root
       ds1:
         type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://192.168.56.10:3327/e_commerce?useSSL=false&useUnicode=true&characterEncoding=UTF-8
         username: root
         password: root
@@ -23,7 +23,7 @@ spring:
       tables:
         ## logic table name t_order
         t_order:
-          actualDataNodes: ds0.t_order_$->{[0,2,4,6,8,10,12,14]},ds1.t_order_$->{[1,3,5,7,9,11,13,15]}
+          actualDataNodes: ds0.t_order_${[0,2,4,6,8,10,12,14]},ds1.t_order_${[1,3,5,7,9,11,13,15]}
           keyGenerator:
             column: id
             type: SNOWFLAKE
