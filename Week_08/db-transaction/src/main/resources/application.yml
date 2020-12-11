@@ -1,0 +1,55 @@
+spring:
+  shardingsphere:
+    props:
+      sql:
+        show: true
+    datasource:
+      names: ds0,ds1
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.56.10:3326/tx_0?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: root
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://192.168.56.10:3327/tx_1?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: root
+
+    sharding:
+      tables:
+        ## logic table name t_order
+        t_order:
+          actualDataNodes: ds${0..1}.t_order_${0..2}
+          ## configure snowflake algorithm to generate id
+          keyGenerator:
+            column: id
+            type: SNOWFLAKE
+            props:
+              worker-id: 100
+              max-tolerate-time-difference-millisecond: 30000
+              max-vibration-offset: 15
+          databaseStrategy:
+            inline:
+              shardingColumn: id
+              algorithmExpression: ds${id % 2}
+          tableStrategy:
+            inline:
+              shardingColumn: id
+              algorithmExpression: t_order_${id % 3}
+
+  datasource:
+    schema: classpath:schema.sql
+    initialization-mode: always
+
+
+
+
+
+logging:
+  level:
+    root: info
+    com.eric.dbtransaction: info
+
