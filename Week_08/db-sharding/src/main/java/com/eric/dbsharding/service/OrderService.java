@@ -9,6 +9,8 @@ public interface OrderService {
 
     void addOrder(Order oder);
 
+    void addOrderWithGeneratedId(Order order);
+
     List<Order> getAllOrders();
 
     void updateOrder(Order order);

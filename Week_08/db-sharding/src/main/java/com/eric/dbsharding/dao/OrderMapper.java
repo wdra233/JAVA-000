@@ -8,6 +8,8 @@ public interface OrderMapper {
 
     int insert(Order record);
 
+    int insertWithGeneratedID(Order record);
+
     Order selectByPrimaryKey(Long id);
 
     List<Order> selectAll();

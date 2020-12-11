@@ -24,7 +24,7 @@ public class OrderServiceImplTest {
     public void setUp() {
         // add 16 orders to the db
         for(int i = 1; i <= 16; i++) {
-            orderService.addOrder(Order.builder().id((long)i).build());
+            orderService.addOrderWithGeneratedId(Order.builder().build());
         }
     }
 
@@ -36,8 +36,8 @@ public class OrderServiceImplTest {
 
     @Test
     public void testAddOrder() {
-        // expect this test order to be inserted into ds0.t_order_0
-        orderService.addOrder(Order.builder().id(32L).build());
+        // insert order with id 1 to ds_1.t_order_1
+        orderService.addOrder(Order.builder().id(1L).build());
     }
 
     @Test

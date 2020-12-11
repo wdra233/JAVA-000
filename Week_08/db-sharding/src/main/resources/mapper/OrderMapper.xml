@@ -15,13 +15,21 @@
     delete from t_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.eric.dbsharding.bean.Order">
-    insert into t_order (id, member_id, order_sn,
+  <insert id="insertWithGeneratedID" parameterType="com.eric.dbsharding.bean.Order">
+    insert into t_order (/*id,*/ member_id, order_sn,
       coupon_id, create_time, member_username, 
       total_amount, pay_amount)
-    values (#{id,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{orderSn,jdbcType=CHAR}, 
+    values (/* #{id,jdbcType=BIGINT},*/ #{memberId,jdbcType=BIGINT}, #{orderSn,jdbcType=CHAR},
       #{couponId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{memberUsername,jdbcType=VARCHAR}, 
       #{totalAmount,jdbcType=DECIMAL}, #{payAmount,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insert" parameterType="com.eric.dbsharding.bean.Order">
+    insert into t_order (id, member_id, order_sn,
+                                 coupon_id, create_time, member_username,
+                                 total_amount, pay_amount)
+    values (#{id,jdbcType=BIGINT}, #{memberId,jdbcType=BIGINT}, #{orderSn,jdbcType=CHAR},
+                                        #{couponId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{memberUsername,jdbcType=VARCHAR},
+                                        #{totalAmount,jdbcType=DECIMAL}, #{payAmount,jdbcType=DECIMAL})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.eric.dbsharding.bean.Order">
     update t_order

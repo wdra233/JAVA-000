@@ -22,6 +22,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
+    public void addOrderWithGeneratedId(Order order) {
+        orderMapper.insertWithGeneratedID(order);
+    }
+
+    @Transactional
+    @Override
     public void addOrder(Order order) {
         orderMapper.insert(order);
     }
