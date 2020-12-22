@@ -31,12 +31,7 @@ public class RpcfxInvoker {
             response.setResult(JSON.toJSONString(result, SerializerFeature.WriteClassName));
             response.setStatus(true);
             return response;
-        } catch ( Exception e) {
-
-            // 3.Xstream
-
-            // 2.封装一个统一的RpcfxException
-            // 客户端也需要判断异常
+        } catch (Exception e) {
             e.printStackTrace();
             response.setException(e);
             response.setStatus(false);
