@@ -33,6 +33,7 @@ public class RpcfxServerApplication {
 
 		// start zk client
 		RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
+		// connecting to zookeeper cluster
 		CuratorFramework client = CuratorFrameworkFactory.builder().connectString("192.168.56.10:2181,192.168.56.10:2182,192.168.56.10:2183").namespace("rpcfx").retryPolicy(retryPolicy).build();
 		client.start();
 
@@ -65,7 +66,7 @@ public class RpcfxServerApplication {
 			ex.printStackTrace();
 		}
 
-		client.create().withMode(CreateMode.EPHEMERAL).
+		client.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).
 				forPath( "/" + service + "/" + userServiceSesc.getHost() + "_" + userServiceSesc.getPort(), "provider".getBytes());
 	}
 

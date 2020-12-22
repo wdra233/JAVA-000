@@ -27,8 +27,8 @@ public class RpcfxInvoker {
             Object service = resolver.resolve(serviceClass);
             Invoker methodInvoker = InvokerFactory.getInstance().getInvoker(service.getClass());
             Object result = methodInvoker.invoke(service, request.getMethod(), request.getParams());
-            // 两次json序列化能否合并成一个
-            response.setResult(JSON.toJSONString(result, SerializerFeature.WriteClassName));
+            // 合并一个json
+            response.setResult(result);
             response.setStatus(true);
             return response;
         } catch (Exception e) {

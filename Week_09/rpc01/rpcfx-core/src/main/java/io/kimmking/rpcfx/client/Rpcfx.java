@@ -80,8 +80,7 @@ public final class Rpcfx {
             }
 
             RpcfxResponse response = post(request, url);
-
-            return JSON.parse(response.getResult().toString());
+            return response.getResult();
         }
 
 
