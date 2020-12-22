@@ -5,8 +5,9 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResolver;
 import io.kimmking.rpcfx.api.RpcfxResponse;
+import io.kimmking.rpcfx.server.invoker.Invoker;
+import io.kimmking.rpcfx.server.invoker.InvokerFactory;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -21,18 +22,16 @@ public class RpcfxInvoker {
     public RpcfxResponse invoke(RpcfxRequest request) {
         RpcfxResponse response = new RpcfxResponse();
         String serviceClass = request.getServiceClass();
-
-        // 作业1：改成泛型和反射
-        Object service = resolver.resolve(serviceClass);//this.applicationContext.getBean(serviceClass);
-
         try {
-            Method method = resolveMethodFromClass(service.getClass(), request.getMethod());
-            Object result = method.invoke(service, request.getParams()); // dubbo, fastjson,
+            // discover service
+            Object service = resolver.resolve(serviceClass);
+            Invoker methodInvoker = InvokerFactory.getInstance().getInvoker(service.getClass());
+            Object result = methodInvoker.invoke(service, request.getMethod(), request.getParams());
             // 两次json序列化能否合并成一个
             response.setResult(JSON.toJSONString(result, SerializerFeature.WriteClassName));
             response.setStatus(true);
             return response;
-        } catch ( IllegalAccessException | InvocationTargetException e) {
+        } catch ( Exception e) {
 
             // 3.Xstream
 
