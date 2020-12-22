@@ -1,8 +1,7 @@
 package io.kimmking.rpcfx.server.invoker;
 
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtNewMethod;
+import io.kimmking.rpcfx.api.RpcfxException;
+import javassist.*;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -23,16 +22,30 @@ public class InvokerFactory {
         return Singleton.invokerFactory;
     }
 
-    public Invoker getInvoker(Class<?> klass) throws Exception {
+    public Invoker getInvoker(Class<?> klass) throws RpcfxException {
         Invoker methodInvoker = invokerMap.get(klass);
         if (methodInvoker != null) {
             return methodInvoker;
         }
 
+        try {
+            ClassPool pool = ClassPool.getDefault();
+            CtClass invokerClass = pool.makeClass(Invoker.class.getName() + classCounter.getAndIncrement(), pool.getCtClass("io.kimmking.rpcfx.server.invoker.Invoker"));
+            String invokeMethod = composeInvokeMethodFromKlass(klass);
+            invokerClass.addMethod(CtNewMethod.make(invokeMethod, invokerClass));
+            methodInvoker = (Invoker) invokerClass.toClass().newInstance();
+            invokerMap.putIfAbsent(klass, methodInvoker);
+            return methodInvoker;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RpcfxException(e.getMessage(), e.getCause());
+        }
+
+    }
+
+    private String composeInvokeMethodFromKlass(Class<?> klass) {
+        Method[] methods = klass.getMethods();
         String className = klass.getName();
-        ClassPool pool = ClassPool.getDefault();
-        Method[] methods = klass.getDeclaredMethods();
-        CtClass invokerClass = pool.makeClass(Invoker.class.getName() + classCounter.getAndIncrement(), pool.getCtClass("io.kimmking.rpcfx.server.invoker.Invoker"));
         StringBuilder methodStr = new StringBuilder("public Object invoke(Object service, String method, Object[] params) {");
 
         for (Method method : methods) {
@@ -60,11 +73,7 @@ public class InvokerFactory {
         }
 
         methodStr.append("return null;}");
-        invokerClass.addMethod(CtNewMethod.make(methodStr.toString(), invokerClass));
-        methodInvoker = (Invoker) invokerClass.toClass().newInstance();
-        invokerMap.putIfAbsent(klass, methodInvoker);
-        return methodInvoker;
-
+        return methodStr.toString();
     }
 
     private static class Singleton {
