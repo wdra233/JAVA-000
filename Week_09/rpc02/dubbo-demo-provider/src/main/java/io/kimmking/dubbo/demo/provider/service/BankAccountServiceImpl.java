@@ -36,6 +36,17 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
+    public void addRMBAmount(Long id, BigDecimal rmb) {
+        BankAccount bankAccount = bankAccountMapper.selectByPrimaryKey(id);
+        BigDecimal balance = bankAccount.getRmbAmount().add(rmb);
+        int result = bankAccountMapper.updateRMBAmountById(id, balance);
+        if (result != 1) {
+            throw new OpsFailureException("Unable to update rmb amount!");
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
     public void subtractUSDAmount(Long id, BigDecimal usd) {
         BankAccount bankAccount = bankAccountMapper.selectByPrimaryKey(id);
         if (bankAccount.getUsdAmount().compareTo(usd) < 0) {
@@ -45,6 +56,17 @@ public class BankAccountServiceImpl implements BankAccountService {
         int result = bankAccountMapper.updateUSDAmountById(id, balance);
         if (result != 1) {
             throw new OpsFailureException("Unable to update rmb amount!");
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void addUSDAmount(Long id, BigDecimal usd) {
+        BankAccount bankAccount = bankAccountMapper.selectByPrimaryKey(id);
+        BigDecimal balance = bankAccount.getUsdAmount().add(usd);
+        int result = bankAccountMapper.updateUSDAmountById(id, balance);
+        if (result != 1) {
+            throw new OpsFailureException("Unable to update usd amount!");
         }
     }
 

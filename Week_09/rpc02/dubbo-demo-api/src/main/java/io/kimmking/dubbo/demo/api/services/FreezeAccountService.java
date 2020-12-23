@@ -5,5 +5,5 @@ import io.kimmking.dubbo.demo.api.entities.FreezeAccount;
 public interface FreezeAccountService {
     public void saveNewAccount(FreezeAccount account);
 
-    public void updateStatus(Long id, String status);
+    public void updateStatus(String freezeId, String status);
 }

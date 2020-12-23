@@ -27,8 +27,8 @@ public class FreezeAccountServiceImpl implements FreezeAccountService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateStatus(Long id, String status) {
-        int result = freezeAccountMapper.updateByPrimaryKey(id, status);
+    public void updateStatus(String freezeId, String status) {
+        int result = freezeAccountMapper.updateStatusByFreezeId(freezeId, status);
         if (result != 1) {
             throw new OpsFailureException("Unable to update status for freeze table");
         }

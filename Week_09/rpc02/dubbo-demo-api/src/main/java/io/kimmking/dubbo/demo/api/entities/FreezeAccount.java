@@ -16,7 +16,7 @@ public class FreezeAccount {
     private Long id;
     private String state;
     private String freezeId;
-    private String accountName;
+    private Long accountId;
     private BigDecimal amount;
     private String currencyType;
     private Long version;

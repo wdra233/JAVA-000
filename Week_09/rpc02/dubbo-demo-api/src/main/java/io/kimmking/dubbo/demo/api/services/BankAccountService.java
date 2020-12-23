@@ -7,7 +7,11 @@ import java.math.BigDecimal;
 public interface BankAccountService {
     public void subtractRMBAmount(Long id, BigDecimal rmb);
 
+    public void addRMBAmount(Long id, BigDecimal rmb);
+
     public void subtractUSDAmount(Long id, BigDecimal usd);
+
+    public void addUSDAmount(Long id, BigDecimal usd);
 
     public void saveNewAccount(BankAccount bankAccount);
 
