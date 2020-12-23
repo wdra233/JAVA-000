@@ -4,7 +4,19 @@ server:
 spring:
   application:
     name: dubbo-demo-provider
-
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/dubbo_hmily?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: wangyw123
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialization-mode: always
+    druid:
+      initial-size: 10
+      max-active: 50
+      min-idle: 2
+      max-open-prepared-statements: 20
+      pool-prepared-statements: true
 dubbo:
   scan:
     base-packages: io.kimmking.dubbo.demo.provider
@@ -24,3 +36,8 @@ dubbo:
     qos-port-compatible: 22222
     qos-accept-foreign-ip-compatible: true
     qos-host: localhost
+logging:
+  level:
+    root: info
+    io.kimmking.dubbo.demo.provider.dao: trace
+

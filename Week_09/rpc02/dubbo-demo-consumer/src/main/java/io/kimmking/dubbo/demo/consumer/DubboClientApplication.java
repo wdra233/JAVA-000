@@ -1,9 +1,5 @@
 package io.kimmking.dubbo.demo.consumer;
 
-import io.kimmking.dubbo.demo.api.Order;
-import io.kimmking.dubbo.demo.api.OrderService;
-import io.kimmking.dubbo.demo.api.User;
-import io.kimmking.dubbo.demo.api.UserService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
