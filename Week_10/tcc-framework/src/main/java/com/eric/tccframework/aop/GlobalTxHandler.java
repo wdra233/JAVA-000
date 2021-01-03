@@ -84,7 +84,7 @@ public class GlobalTxHandler {
         String port = split[1];
 
         String targetUrl = "http://" + localAddress + ":" + port + "/tm/execNext?txid=" + txid;
-        Boolean response = restTemplate.getForObject(targetUrl, Boolean.class, new HashMap<>());
+        Boolean response = restTemplate.getForObject(targetUrl, boolean.class, new HashMap<>());
 
         if(response == null || !response.booleanValue()) {
             log.error("execute next step failed");

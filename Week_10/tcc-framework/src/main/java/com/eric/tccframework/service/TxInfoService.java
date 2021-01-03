@@ -75,6 +75,5 @@ public class TxInfoService {
                 .updateTime(new Timestamp(System.currentTimeMillis()))
                 .build();
         txInfoMapper.insertOne(txinfo);
-
     }
 }
