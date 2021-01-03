@@ -1,16 +1,20 @@
 package com.eric.tccframework.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "t_txinfo", indexes = {@Index(name = "IDX_TXID", columnList = "txid")})
 @Entity
 @Data
-@NoArgsConstructor
 public class TransactionInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
