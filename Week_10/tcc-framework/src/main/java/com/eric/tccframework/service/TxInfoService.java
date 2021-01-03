@@ -51,6 +51,7 @@ public class TxInfoService {
             }
 
             try {
+                System.out.println(txinfo.getClassName());
                 Class<?> klass = Class.forName(txinfo.getClassName());
 
                 Method method = klass.getDeclaredMethod(methodName);

@@ -12,7 +12,8 @@ import java.util.List;
 @Mapper
 @Repository
 public interface TxInfoMapper {
-    @Select("select id, txid, status, class_name, confirm_method, cancel_method, create_time, update_time from t_txinfo where txid = #{txid}")
+    @Select("select id, txid, status, class_name as className, confirm_method as confirmMethod, " +
+            "cancel_method as cancelMethod, create_time as createTime, update_time as updateTime from t_txinfo where txid = #{txid}")
     List<TransactionInfo> selectByTXID(String txid);
 
     @Insert("insert into t_txinfo(txid,status,class_name,confirm_method,cancel_method,create_time,update_time) " +
