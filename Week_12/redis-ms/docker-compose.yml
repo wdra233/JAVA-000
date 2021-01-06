@@ -1,0 +1,42 @@
+version: '3'
+services:
+  master:
+    image: redis
+    container_name: redis-master
+    ports:
+      - 7000:7000
+    volumes:
+      - ./redis7000.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host
+
+  slave1:
+    image: redis
+    container_name: redis-slave1
+    ports:
+      - 7001:7001
+    volumes:
+      - ./redis7001.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host
+
+  slave2:
+    image: redis
+    container_name: redis-slave2
+    ports:
+      - 7002:7002
+    volumes:
+      - ./redis7002.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host
+
+  sentinel:
+    image: redis
+    container_name: sentinel
+    ports:
+      - 26379:26379
+    volumes:
+      - ./sentinel.conf:/usr/local/etc/redis/sentinel.conf
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    network_mode: host
+
