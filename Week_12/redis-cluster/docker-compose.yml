@@ -1,0 +1,68 @@
+version: '3'
+services:
+  redis6380:
+    image: redis
+    container_name: redis6380
+    ports:
+      - 6380:6380
+    volumes:
+      - ./redis6380.conf:/usr/local/etc/redis/redis.conf
+    command:
+      redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host
+
+  redis6381:
+    image: redis
+    container_name: redis6381
+    ports:
+      - 6381:6381
+    volumes:
+      - ./redis6381.conf:/usr/local/etc/redis/redis.conf
+    command:
+      redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host
+
+  redis6382:
+    image: redis
+    container_name: redis6382
+    ports:
+      - 6382:6382
+    volumes:
+      - ./redis6382.conf:/usr/local/etc/redis/redis.conf
+    command:
+      redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host
+
+
+  redis6383:
+    image: redis
+    container_name: redis6383
+    ports:
+      - 6383:6383
+    volumes:
+      - ./redis6383.conf:/usr/local/etc/redis/redis.conf
+    command:
+      redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host
+
+  redis6384:
+    image: redis
+    container_name: redis6384
+    ports:
+      - 6384:6384
+    volumes:
+      - ./redis6384.conf:/usr/local/etc/redis/redis.conf
+    command:
+      redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host
+
+  redis6385:
+    image: redis
+    container_name: redis6385
+    ports:
+      - 6385:6385
+    volumes:
+      - ./redis6385.conf:/usr/local/etc/redis/redis.conf
+    command:
+      redis-server /usr/local/etc/redis/redis.conf
+    network_mode: host
